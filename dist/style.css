@@ -1,0 +1,38 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    display: grid;
+    grid-template-columns: 1fr 5fr;
+    grid-template-rows: 100px 1fr;
+    align-items: center;
+    height: 100vh;
+}
+
+#header{
+    grid-column: 1/3;
+    grid-row: 1/2;
+    margin-left: 1rem;
+}
+
+#sidebar{
+    grid-column: 1/2;
+    grid-row: 2/3;
+    justify-self: center;
+}
+
+#content{
+    grid-column: 2/3;
+    grid-row: 2/3;
+    align-self: normal;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(auto-fit, 50px);
+}
+
+ul{
+    list-style-type: none;
+}

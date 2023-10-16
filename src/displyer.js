@@ -47,7 +47,7 @@ const createProjects = (projectEl, projects) => {
     projects.forEach(project => {
         const projectEl = document.createElement("li");
         console.log(projectEl);
-        projectEl.innerText = project;
+        projectEl.innerText = project.name;
         projectEl.classList.add("project");
 
         projectList.appendChild(projectEl);
@@ -86,7 +86,12 @@ const createConten = (contentEl, allTasks) =>{
     addButton.innerText = "AddTask"
     addButton.classList.add("task-add");
 
-    contentEl.appendChild(addButton);
+    const buttonConteiner = document.createElement("div");
+    buttonConteiner.classList.add("task");
+
+    buttonConteiner.appendChild(addButton)
+
+    contentEl.appendChild(buttonConteiner);
 
     allTasks.forEach(task =>{
         const taskel = document.createElement("div");
