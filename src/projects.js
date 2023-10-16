@@ -1,5 +1,4 @@
-export default function createProject(name){
-    
+export default function createProject(name, id){
     const tasks = []
 
     const addTask = (task) =>{
@@ -17,6 +16,7 @@ export default function createProject(name){
 
     return{
         name,
+        id,
         addTask,
         getTasks,
         deleteTask

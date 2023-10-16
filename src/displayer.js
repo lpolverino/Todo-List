@@ -8,7 +8,7 @@ const createSection = (sectionName, sectionHandler) =>{
     const sectionsList = document.getElementsByClassName("sections")[0];
     const sectionEl = document.createElement("li")
     const sectionLink = document.createElement("a")
-    sectionLink.innerText = section;
+    sectionLink.innerText = sectionName;
     sectionLink.setAttribute("href", "#")
     sectionLink.dataset.section = sectionName
     sectionLink.classList.add("section-link");
@@ -55,7 +55,7 @@ const createProjects = (projectEl, projects) => {
         const projectEl = document.createElement("li");
         projectEl.innerText = project.name;
         projectEl.classList.add("project");
-
+        projectEl.dataset.id = project.id
         projectList.appendChild(projectEl);
     });
 
@@ -100,6 +100,7 @@ const createConten = (contentEl, allTasks) =>{
     allTasks.forEach(task =>{
         const taskel = document.createElement("div");
         taskel.classList.add("task");
+        taskel.dataset.id=task.id
         createTask(taskel,task);
         contentEl.appendChild(taskel);
     })
@@ -128,8 +129,6 @@ export default function createDisplayer(sections, projects) {
             })
             return tasks;
         }
-        console.log(sections);
-
         const header = document.getElementById("header");
         createHeader(header)
 

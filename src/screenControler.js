@@ -1,6 +1,7 @@
 import createDisplayer from "./displayer"
 
 function createSections(){
+    // los handlers estan incompletos
     return [
         {name:"All", handler: () => true},
         {name:"today", handler:(task) => task.isFromToday()},
@@ -15,13 +16,11 @@ export default function createScreenControler(app){
 
     const displayer = createDisplayer(sections, app.getProjects());
 
-    
     let currentProject = app.firstProject();
     displayer.initialize();
     
     sections.forEach(section => {
-        displayer.createSection(section.normalize, section.handler);
-
+        displayer.createSection(section.name, section.handler);
     });
 
     const updateScreen = () =>{

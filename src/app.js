@@ -3,16 +3,26 @@ import createTodo from "./todo"
 
 
 export default function createApp(prjs){
+    let projects = []
 
-    let projects = prjs
+    let max =  1000000
 
-    const createTask = (title,description,date,priority,cheked, project) =>{
-        const task = createTodo(title,description,date,priority,cheked)
-        project.addTask(task)
+
+    const getUniqueId = () =>{
+        return  Math.floor(Math.random() * max)
+    }
+
+    const createTask = (title,description,date,priority,cheked, projectId) =>{
+        const task = createTodo(title,description,date,priority,cheked, getUniqueId())
+        const projectToAddTask = projects.find(project => project.id === projectId)
+        console.log("is this" + projectToAddTask);
+        projectToAddTask.addTask(task)
     }
     
     const createProject = (name) =>{
-        projects.push(newProject(name))
+        const project = newProject(name,  getUniqueId())
+        projects.push(project)
+        return project.id
     }
     
     const updateTask = (task, newTask, project) =>{
