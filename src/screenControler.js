@@ -10,7 +10,6 @@ function createSections(){
         {name:"Completed", handler:(task) => task.isCompleted()}]
 }
 
-
 export default function createScreenControler(app){
 
     const sections = createSections()
@@ -36,12 +35,12 @@ export default function createScreenControler(app){
         } );
     });
 
-
     const renderProjects = () => {
+        displayer.renderProjects();
         app.getProjects().forEach(project =>{
         displayer.createProject(project, (projectId) =>{
             changeDisplay(()=>{
-                app.getProjectTask(projectId)
+                return app.getProjectTask(projectId)
             })
         });
     })}
@@ -51,30 +50,61 @@ export default function createScreenControler(app){
     }
 
     const updateScreen = () =>{
-        const addTaskButton = document.getElementsByClassName("task-add")[0];
-        addTaskButton.addEventListener("click", addTaskHandler)
-
         renderProjects();
         renderTasks();
+
+        const addTaskButton = document.getElementsByClassName("task-add")[0];
+        addTaskButton.addEventListener("click", addTaskHandler)
         // display projectId or filter
     }
 
     const addTaskHandler = (event) =>{
         event.preventDefault();
         // get new task modal or form
-        app.createTask("1","1","1","1","1", sectionToRender);
-        updateScreen();
+        const dialog = document.getElementsByClassName("task-dialog")[0];
+        dialog.showModal();
+        const sumbitButton = document.getElementsByClassName("sumbit-task")[0];
+        sumbitButton.addEventListener("click", ()=>{
+
+            const inputTaskName = document.getElementById("task-name").value;
+            const inputTaskDescription = document.getElementById("task-description").value;
+            const inputTaskDate = document.getElementById("task-date").value;
+            const inputTaskPriority = document.getElementById("task-priority").value;
+            const inputTaskCheked = document.getElementById("task-check").value;
+
+            console.log("the section to render is" + sectionToRender.id);
+            
+            app.createTask(
+                inputTaskCheked,
+                inputTaskDate,
+                inputTaskDescription,
+                inputTaskName,
+                inputTaskPriority,
+                sectionToRender.id
+            )
+
+            dialog.close();
+            updateScreen();
+        });
     }
 
     const addProjectHandler = (event) =>{
         event.preventDefault();
-        // get new project modal or from
-        app.createProject("1");
-        updateScreen();
+        const dialog = document.getElementsByClassName("project-dialog")[0];
+        dialog.showModal();
+        const sumbitButton = document.getElementsByClassName("sumbit-project")[0];
+        sumbitButton.addEventListener("click", ()=>{
+            const projectName = document.getElementById("project").value
+            app.createProject(projectName);
+            dialog.close();
+            updateScreen();
+        });
     }
 
+
     const addProjectButton = document.getElementsByClassName("projects-add")[0];
-    addProjectButton.addEventListener("click", addProjectHandler)
+    addProjectButton.addEventListener("click", addProjectHandler);
 
     updateScreen();
+
 }

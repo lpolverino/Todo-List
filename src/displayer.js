@@ -42,10 +42,70 @@ const createProjectTitle = (projectEl) => {
     addButton.classList.add("projects-add");
     addButton.innerText ="Add Project"
 
+    const dialog = document.createElement("dialog");
+    dialog.classList.add("project-dialog");
+    projectTitleConteiner.appendChild(dialog);
+
+    const form = document.createElement("form");
+    const input = document.createElement("input");
+    input.setAttribute("type","text");
+    input.setAttribute("id","project");
+    input.setAttribute("name","Project");
+
+    const sumbitButton = document.createElement("button");
+    sumbitButton.classList.add("sumbit-project");
+
+    form.appendChild(input);
+    dialog.appendChild(form);
+    form.appendChild(sumbitButton);
 
     projectTitleConteiner.appendChild(addButton);
 
     projectEl.appendChild(projectTitleConteiner);
+}
+
+const createFormDialog = (fatherConteiner) =>{
+    const dialog = document.createElement("dialog");
+    dialog.classList.add("task-dialog");
+
+    const form = document.createElement("form");
+    
+    const inputTaskName = document.createElement("input");
+    inputTaskName.setAttribute("type","text");
+    inputTaskName.setAttribute("id","task-name");
+    inputTaskName.setAttribute("name","task-name");
+
+    const inputTaskDescription = document.createElement("input");
+    inputTaskDescription.setAttribute("type","text");
+    inputTaskDescription.setAttribute("id","task-description");
+    inputTaskDescription.setAttribute("name","task-description");
+
+    const inputTaskDate = document.createElement("input");
+    inputTaskDate.setAttribute("type","date");
+    inputTaskDate.setAttribute("id","task-date");
+    inputTaskDate.setAttribute("name","task-date");
+
+    const inputTaskPriority = document.createElement("input");
+    inputTaskPriority.setAttribute("type","number");
+    inputTaskPriority.setAttribute("id","task-priority");
+    inputTaskPriority.setAttribute("name","task-priority");
+
+    const inputTaskCheked = document.createElement("input");
+    inputTaskCheked.setAttribute("type","checkbox");
+    inputTaskCheked.setAttribute("id","task-check");
+    inputTaskCheked.setAttribute("name","task-check");
+
+    const sumbitButton = document.createElement("button");
+    sumbitButton.classList.add("sumbit-task");
+
+    form.appendChild(inputTaskName);
+    form.appendChild(inputTaskDescription);
+    form.appendChild(inputTaskDate);
+    form.appendChild(inputTaskPriority);
+    form.appendChild(inputTaskCheked);
+    dialog.appendChild(form);
+    form.appendChild(sumbitButton);
+    fatherConteiner.appendChild(dialog);
 }
 
 const createProject = (project, handler) =>{
@@ -114,12 +174,15 @@ const createConten = (allTasks, contentEl) =>{
     addButton.innerText = "AddTask"
     addButton.classList.add("task-add");
 
+
+
     const buttonConteiner = document.createElement("div");
     buttonConteiner.classList.add("task");
 
     buttonConteiner.appendChild(addButton)
 
-    console.log(contentEl);
+    createFormDialog(buttonConteiner);
+
     contentEl.appendChild(buttonConteiner);
 
     allTasks.forEach(task =>{
@@ -133,16 +196,6 @@ const createConten = (allTasks, contentEl) =>{
 
 export default function createDisplayer(sections, projects) {
 
-    const renderProjects = () =>{
-
-    }
-    const renderTask = (filer) => {
-
-    }
-
-    const renderProject = (project) =>{
-
-    }
 
     const initialize = () =>{
         const getAllProjets = () =>{
@@ -163,13 +216,17 @@ export default function createDisplayer(sections, projects) {
         createConten(getAllProjets(), content);
     }
 
+
+    const renderProjects = () =>{
+        const projects = document.getElementsByClassName("projects")[0];
+        emptyContent(projects)
+    }
+
     return{
         initialize,
-        renderProjects,
-        renderTask,
-        renderProject,
         createSection,
         createProject,
-        renderContent
+        renderContent,
+        renderProjects
     }
 }

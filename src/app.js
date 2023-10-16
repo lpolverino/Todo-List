@@ -15,7 +15,6 @@ export default function createApp(prjs){
     const createTask = (title,description,date,priority,cheked, projectId) =>{
         const task = createTodo(title,description,date,priority,cheked, getUniqueId())
         const projectToAddTask = projects.find(project => project.id === projectId)
-        console.log("is this" + projectToAddTask);
         projectToAddTask.addTask(task)
     }
     
@@ -52,7 +51,7 @@ export default function createApp(prjs){
         return projects;
     }
     const getProjectTask = (projectId) => {
-        return projects.find(project => project.id === projectId)
+        return projects.find(project => project.id === projectId).getTasks()
     }
 
 
