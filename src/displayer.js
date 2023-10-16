@@ -1,3 +1,4 @@
+
 const createHeader = (headerEl) =>{
     const title = document.createElement("h1");
     title.innerText = "TODO LIST"
@@ -41,23 +42,33 @@ const createProjectTitle = (projectEl) => {
     addButton.classList.add("projects-add");
     addButton.innerText ="Add Project"
 
+
     projectTitleConteiner.appendChild(addButton);
 
-    projectEl.appendChild(projectTitleConteiner)
+    projectEl.appendChild(projectTitleConteiner);
+}
+
+const createProject = (project, handler) =>{
+
+    const projectList = document.getElementsByClassName("projects")[0];
+    const projectEl = document.createElement("li");
+    const projectName = document.createElement("a");
+    projectName.innerText = project.name;
+    projectName.setAttribute("href", "#");
+    projectEl.appendChild(projectName);
+    projectEl.classList.add("project");
+    projectEl.dataset.id = project.id
+    projectEl.addEventListener("click", (e) =>{
+        e.preventDefault();
+        handler(project.id);
+    })
+    projectList.appendChild(projectEl);
 }
 
 const createProjects = (projectEl, projects) => {
 
     const projectList = document.createElement("ul");
     projectList.classList.add("projects");
-
-    projects.forEach(project => {
-        const projectEl = document.createElement("li");
-        projectEl.innerText = project.name;
-        projectEl.classList.add("project");
-        projectEl.dataset.id = project.id
-        projectList.appendChild(projectEl);
-    });
 
     projectEl.appendChild(projectList)
 }
@@ -85,7 +96,20 @@ const createTask = (taskEl, task) =>{
     taskEl.appendChild(titleEl);
 }
 
-const createConten = (contentEl, allTasks) =>{
+const emptyContent = (contentEl) => {
+    while (contentEl.firstChild) {
+        contentEl.removeChild(contentEl.lastChild);
+    }
+}
+
+const renderContent = (tasks) =>{
+    const contentEl = document.getElementById("content");
+    emptyContent(contentEl)
+    createConten(tasks, contentEl)
+} 
+
+
+const createConten = (allTasks, contentEl) =>{
     const addButton = document.createElement("button");
     addButton.innerText = "AddTask"
     addButton.classList.add("task-add");
@@ -95,6 +119,7 @@ const createConten = (contentEl, allTasks) =>{
 
     buttonConteiner.appendChild(addButton)
 
+    console.log(contentEl);
     contentEl.appendChild(buttonConteiner);
 
     allTasks.forEach(task =>{
@@ -107,8 +132,6 @@ const createConten = (contentEl, allTasks) =>{
 }
 
 export default function createDisplayer(sections, projects) {
-
-
 
     const renderProjects = () =>{
 
@@ -137,7 +160,7 @@ export default function createDisplayer(sections, projects) {
 
 
         const content = document.getElementById("content");
-        createConten(content, getAllProjets());
+        createConten(getAllProjets(), content);
     }
 
     return{
@@ -146,5 +169,7 @@ export default function createDisplayer(sections, projects) {
         renderTask,
         renderProject,
         createSection,
+        createProject,
+        renderContent
     }
 }
