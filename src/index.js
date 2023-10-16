@@ -1,16 +1,10 @@
-import createTodo from "./todo";
-import createProject from "./projects";
-import createDisplayer from "./displyer";
+import projects from "./mockUp";
+import createDisplayer from "./displayer";
 import createScreenControler from "./screenControler";
-import createApp from "./app" 
+import createApp from "./app"
 
-const newProject = createProject("nuevo");
+const app = createApp([projects.projects]);
 
-const newTask = createTodo("hola","si","ahora","1","no");
+const screenControler = createScreenControler(app);
 
-newProject.addTask(newTask);
-
-
-createDisplayer([newProject]);
-
-const screenControler = createScreenControler();
+app.createTask("1","1","1","1","1",projects.projects)

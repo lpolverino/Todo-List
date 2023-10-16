@@ -6,6 +6,11 @@ export default function createProject(name){
         tasks.push(task)
     }
 
+    const deleteTask = (task) =>{
+        const indexTask = tasks.indexOf(task);
+        task.splice(indexTask,1)
+    }
+
     const getTasks = () =>{
         return tasks
     }
@@ -13,6 +18,7 @@ export default function createProject(name){
     return{
         name,
         addTask,
-        getTasks
+        getTasks,
+        deleteTask
     }
 }

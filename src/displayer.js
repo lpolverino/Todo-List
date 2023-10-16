@@ -4,19 +4,26 @@ const createHeader = (headerEl) =>{
     headerEl.appendChild(title);
 }
 
+const createSection = (sectionName, sectionHandler) =>{
+    const sectionsList = document.getElementsByClassName("sections")[0];
+    const sectionEl = document.createElement("li")
+    const sectionLink = document.createElement("a")
+    sectionLink.innerText = section;
+    sectionLink.setAttribute("href", "#")
+    sectionLink.dataset.section = sectionName
+    sectionLink.classList.add("section-link");
+    sectionEl.appendChild(sectionLink)
+    sectionEl.classList.add("section")
+    sectionEl.addEventListener("click", sectionHandler);
+    sectionsList.appendChild(sectionEl);
+}
+
 const createSections = (sidebarEl,sections) =>{
     const sectionConteiner = document.createElement("div");
     sectionConteiner.classList.add("section-conteiner");
 
     const sectionsList = document.createElement("ul");
     sectionsList.classList.add("sections")
-    sections.forEach(section => {
-        const sectionEl = document.createElement("li")
-        sectionEl.innerText = section;
-        sectionEl.classList.add("section")
-        sectionsList.appendChild(sectionEl);
-    });
-
     sectionConteiner.appendChild(sectionsList);
     sidebarEl.appendChild(sectionConteiner);
 }
@@ -46,7 +53,6 @@ const createProjects = (projectEl, projects) => {
 
     projects.forEach(project => {
         const projectEl = document.createElement("li");
-        console.log(projectEl);
         projectEl.innerText = project.name;
         projectEl.classList.add("project");
 
@@ -64,9 +70,7 @@ const createProjectSection = (sidebarEl, projects) => {
     sidebarEl.appendChild(projectsConteiner);
 }
 
-const createSidebar = (sidebarEl, projects) =>{
-    const sections = ["All","today","this Week", "Important", "Completed"]
-
+const createSidebar = (sidebarEl, projects, sections) =>{
     createSections(sidebarEl,sections);
     createProjectSection(sidebarEl, projects)
 }
@@ -101,27 +105,47 @@ const createConten = (contentEl, allTasks) =>{
     })
 }
 
-export default function createDisplayer(projects) {
+export default function createDisplayer(sections, projects) {
 
-    const items = projects;
 
-    const getAllProjets = () =>{
-        let tasks = []
-        projects.forEach(project => {
-            tasks = tasks.concat(project.getTasks())
-        })
-        return tasks;
+
+    const renderProjects = () =>{
+
+    }
+    const renderTask = (filer) => {
+
     }
 
-    console.log(items);
-    const header = document.getElementById("header");
-    createHeader(header)
+    const renderProject = (project) =>{
 
-    const sidebar = document.getElementById("sidebar");
-    createSidebar(sidebar,items);
+    }
+
+    const initialize = () =>{
+        const getAllProjets = () =>{
+            let tasks = []
+            projects.forEach(project => {
+                tasks = tasks.concat(project.getTasks())
+            })
+            return tasks;
+        }
+        console.log(sections);
+
+        const header = document.getElementById("header");
+        createHeader(header)
+
+        const sidebar = document.getElementById("sidebar");
+        createSidebar(sidebar,projects, sections);
 
 
-    const content = document.getElementById("content");
-    createConten(content, getAllProjets());
+        const content = document.getElementById("content");
+        createConten(content, getAllProjets());
+    }
 
+    return{
+        initialize,
+        renderProjects,
+        renderTask,
+        renderProject,
+        createSection,
+    }
 }
