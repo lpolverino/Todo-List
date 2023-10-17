@@ -41,12 +41,16 @@ export default function createScreenControler(app){
     const renderProjects = () => {
         displayer.renderProjects();
         app.getProjects().forEach(project =>{
-        displayer.createProject(project, (projectId) =>{
-            changeDisplay(()=>{
-                isRenderingSection = false
-                return app.getProjectTask(projectId)
-            })
-        });
+        displayer.createProject(
+            project,
+            (projectId) =>{
+                changeDisplay(()=>{
+                    isRenderingSection = false
+                    return app.getProjectTask(projectId)
+                })
+            },
+            (event, projectId) => deleteProjectHandler(event, projectId)
+        );
     })}
 
     const renderTasks = () => {
@@ -80,8 +84,6 @@ export default function createScreenControler(app){
             const inputTaskDate = document.getElementById("task-date").value;
             const inputTaskPriority = document.getElementById("task-priority").value;
             const inputTaskCheked = document.getElementById("task-check").value;
-
-            console.log("the section to render is" + sectionToRender.id);
             
             app.createTask(
                 inputTaskName,
@@ -96,7 +98,6 @@ export default function createScreenControler(app){
             updateScreen();
         });
     }
-    console.log("here");
     const addProjectHandler = (event) =>{
         event.preventDefault();
         const dialog = document.getElementsByClassName("project-dialog")[0];
@@ -111,6 +112,12 @@ export default function createScreenControler(app){
     }
     
     const deleteProjectHandler = (event,projectId) =>{
+        event.preventDefault();
+        app.deleteProject(projectId);
+        if(sectionToRender.id === projectId){
+            tasks = []
+        }
+        updateScreen();
     }
     const deleteTaskHandler = (event, taskId) =>{
         event.preventDefault();

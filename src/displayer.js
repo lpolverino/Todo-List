@@ -113,7 +113,7 @@ const createFormDialog = (fatherConteiner, clas) =>{
     fatherConteiner.appendChild(dialog);
 }
 
-const createProject = (project, handler) =>{
+const createProject = (project, clickHandler, deleteHandler) =>{
     const projectList = document.getElementsByClassName("projects")[0];
     const projectEl = document.createElement("li");
     const projectName = document.createElement("a");
@@ -124,12 +124,16 @@ const createProject = (project, handler) =>{
     projectEl.dataset.id = project.id
     projectEl.addEventListener("click", (e) =>{
         e.preventDefault();
-        handler(project.id);
+        clickHandler(project.id);
     })
     
     const deleteButton = document.createElement("button");
     deleteButton.classList.add("delete-project-button");
     deleteButton.innerText = "Delete";
+    deleteButton.addEventListener("click", (e) =>{
+        e.preventDefault();
+        deleteHandler(e, project.id);
+    })
 
     projectEl.appendChild(deleteButton)
     projectList.appendChild(projectEl);
@@ -208,6 +212,7 @@ const createConten = (allTasks, contentEl, editHandler, deleteHandler) =>{
     createFormDialog(buttonConteiner);
 
     contentEl.appendChild(buttonConteiner);
+    console.log(allTasks);
 
     allTasks.forEach(task =>{
         const taskel = document.createElement("div");

@@ -40,9 +40,13 @@ export default function createApp(prjs){
         projects[indexProject].deleteTask(taskId);
     }
 
-    const deleteProject = (project) =>{
+    const deleteProject = (projectId) =>{
+        const project = projects.find((project)=>project.id === projectId)
         const indexProject = projects.indexOf(project);
         projects.splice(indexProject,1)
+        project.getTasks().forEach(task => {
+            project.deleteTask(task.id)
+        });
     }
 
     const firstProject = () =>{
@@ -57,16 +61,20 @@ export default function createApp(prjs){
     }
 
     const getProjectTask = (projectId) => {
-        return projects.find(project => project.id === projectId).getTasks()
+        const project = projects.find(project => project.id === projectId)
+        return project ? project.getTasks() : []
     }
 
     const getAllTask = () =>{
         let placeholder= projects.map((project) =>{
             return project.getTasks();
         })
-        return placeholder.reduce((prev,next) =>{
-            return prev.concat(next)
-        })
+        if(placeholder){
+            return placeholder.reduce((prev,next) =>{
+                return prev.concat(next)
+            }) 
+        } 
+        return []
     }
 
 
