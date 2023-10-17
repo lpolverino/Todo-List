@@ -15,11 +15,14 @@ const createSection = (sectionName, sectionHandler) =>{
     sectionLink.classList.add("section-link");
     sectionEl.appendChild(sectionLink)
     sectionEl.classList.add("section")
-    sectionEl.addEventListener("click", sectionHandler);
+    sectionEl.addEventListener("click", (e) =>{
+        e.preventDefault();
+        sectionHandler();
+    });
     sectionsList.appendChild(sectionEl);
 }
 
-const createSections = (sidebarEl,sections) =>{
+const createSections = (sidebarEl) =>{
     const sectionConteiner = document.createElement("div");
     sectionConteiner.classList.add("section-conteiner");
 
@@ -109,7 +112,6 @@ const createFormDialog = (fatherConteiner) =>{
 }
 
 const createProject = (project, handler) =>{
-
     const projectList = document.getElementsByClassName("projects")[0];
     const projectEl = document.createElement("li");
     const projectName = document.createElement("a");
@@ -125,7 +127,7 @@ const createProject = (project, handler) =>{
     projectList.appendChild(projectEl);
 }
 
-const createProjects = (projectEl, projects) => {
+const createProjects = (projectEl) => {
 
     const projectList = document.createElement("ul");
     projectList.classList.add("projects");
@@ -168,13 +170,10 @@ const renderContent = (tasks) =>{
     createConten(tasks, contentEl)
 } 
 
-
 const createConten = (allTasks, contentEl) =>{
     const addButton = document.createElement("button");
     addButton.innerText = "AddTask"
     addButton.classList.add("task-add");
-
-
 
     const buttonConteiner = document.createElement("div");
     buttonConteiner.classList.add("task");
@@ -196,9 +195,8 @@ const createConten = (allTasks, contentEl) =>{
 
 export default function createDisplayer(sections, projects) {
 
-
     const initialize = () =>{
-        const getAllProjets = () =>{
+        const getAllTasks = () =>{
             let tasks = []
             projects.forEach(project => {
                 tasks = tasks.concat(project.getTasks())
@@ -213,7 +211,7 @@ export default function createDisplayer(sections, projects) {
 
 
         const content = document.getElementById("content");
-        createConten(getAllProjets(), content);
+        createConten(getAllTasks(), content);
     }
 
 

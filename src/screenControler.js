@@ -3,7 +3,7 @@ import createDisplayer from "./displayer"
 function createSections(){
     // los handlers estan incompletos
     return [
-        {name:"All", handler: () => true},
+        {name:"All", handler: (task) => true},
         {name:"today", handler:(task) => task.isFromToday()},
         {name:"this Week", handler:(task) => task.isFromThisWeek()},
         {name:"Important", handler:(task) => task.isImportant()},
@@ -13,11 +13,11 @@ function createSections(){
 export default function createScreenControler(app){
 
     const sections = createSections()
-
     const displayer = createDisplayer(sections, app.getProjects());
 
     let sectionToRender = app.firstProject();
     let tasks = sectionToRender.getTasks();
+    let isRenderingSection = false;
 
     displayer.initialize();
 
@@ -30,7 +30,10 @@ export default function createScreenControler(app){
     sections.forEach(section => {
         displayer.createSection(section.name, () =>{
             changeDisplay(()=>{
-                section.handler()
+                isRenderingSection = true
+                return app.getAllTask().filter((task) =>{
+                    return section.handler(task)
+                })
             })
         } );
     });
@@ -40,6 +43,7 @@ export default function createScreenControler(app){
         app.getProjects().forEach(project =>{
         displayer.createProject(project, (projectId) =>{
             changeDisplay(()=>{
+                isRenderingSection = false
                 return app.getProjectTask(projectId)
             })
         });
@@ -60,7 +64,11 @@ export default function createScreenControler(app){
 
     const addTaskHandler = (event) =>{
         event.preventDefault();
-        // get new task modal or form
+        if(isRenderingSection){
+            //can be change a little bit nicer
+            alert("You Have to be in an Project to add a Task")
+            return;
+        }
         const dialog = document.getElementsByClassName("task-dialog")[0];
         dialog.showModal();
         const sumbitButton = document.getElementsByClassName("sumbit-task")[0];
@@ -100,7 +108,6 @@ export default function createScreenControler(app){
             updateScreen();
         });
     }
-
 
     const addProjectButton = document.getElementsByClassName("projects-add")[0];
     addProjectButton.addEventListener("click", addProjectHandler);

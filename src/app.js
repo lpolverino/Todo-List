@@ -50,8 +50,18 @@ export default function createApp(prjs){
     const getProjects = () =>{
         return projects;
     }
+
     const getProjectTask = (projectId) => {
         return projects.find(project => project.id === projectId).getTasks()
+    }
+
+    const getAllTask = () =>{
+        let placeholder= projects.map((project) =>{
+            return project.getTasks();
+        })
+        return placeholder.reduce((prev,next) =>{
+            return prev.concat(next)
+        })
     }
 
 
@@ -63,6 +73,7 @@ export default function createApp(prjs){
         deleteProject,
         getProjects,
         firstProject,
-        getProjectTask
+        getProjectTask,
+        getAllTask
     }
 }
