@@ -77,6 +77,10 @@ export default function createApp(prjs){
         return []
     }
 
+    const getProjectId = (projectName) =>{
+        return projects.find(project => project.name === projectName)
+    }
+
 
     return{
         createTask,
@@ -87,6 +91,8 @@ export default function createApp(prjs){
         getProjects,
         firstProject,
         getProjectTask,
-        getAllTask
+        getAllTask,
+        getProjectId
+
     }
 }
