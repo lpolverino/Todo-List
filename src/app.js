@@ -7,6 +7,11 @@ export default function createApp(prjs){
 
     let max =  1000000
 
+    const findProjectTask = (taskId) =>{
+        return  projects.find((prj) =>{
+            return prj.hasTask(taskId)
+        })
+    }
 
     const getUniqueId = () =>{
         return  Math.floor(Math.random() * max)
@@ -24,15 +29,15 @@ export default function createApp(prjs){
         return project.id
     }
     
-    const updateTask = (task, newTask, project) =>{
-        const indexOfTask = projects.indexOf(task);
-        projects[indexOfTask] = newTask
+    const updateTask = (taskId, newTask) =>{
+        const project = findProjectTask(taskId);
+        project.updateTask(taskId,newTask)
     }
 
-    const deleteTask = (task, project) => {
+    const deleteTask = (taskId) => {
+        const project = findProjectTask(taskId);
         const indexProject = projects.indexOf(project);
-        projects[indexProject].deleteTask(task);
-        
+        projects[indexProject].deleteTask(taskId);
     }
 
     const deleteProject = (project) =>{

@@ -21,9 +21,9 @@ export default function createScreenControler(app){
 
     displayer.initialize();
 
-    const changeDisplay = (updateTaskHandler) =>{
+    const changeDisplay = (updateTasksHandler) =>{
         // setear activo al proyecto o seccion clikeada y sacar al anterior
-        tasks = updateTaskHandler();
+        tasks = updateTasksHandler();
         updateScreen()
     }
     
@@ -50,7 +50,8 @@ export default function createScreenControler(app){
     })}
 
     const renderTasks = () => {
-        displayer.renderContent(tasks)
+        console.log(tasks);
+        displayer.renderContent(tasks, updateTaskHandler, deleteTaskHandler)
     }
 
     const updateScreen = () =>{
@@ -83,11 +84,11 @@ export default function createScreenControler(app){
             console.log("the section to render is" + sectionToRender.id);
             
             app.createTask(
-                inputTaskCheked,
-                inputTaskDate,
-                inputTaskDescription,
                 inputTaskName,
+                inputTaskDescription,
+                inputTaskDate,
                 inputTaskPriority,
+                inputTaskCheked,
                 sectionToRender.id
             )
 
@@ -95,7 +96,7 @@ export default function createScreenControler(app){
             updateScreen();
         });
     }
-
+    console.log("here");
     const addProjectHandler = (event) =>{
         event.preventDefault();
         const dialog = document.getElementsByClassName("project-dialog")[0];
@@ -107,6 +108,47 @@ export default function createScreenControler(app){
             dialog.close();
             updateScreen();
         });
+    }
+    
+    const deleteProjectHandler = (event,projectId) =>{
+    }
+    const deleteTaskHandler = (event, taskId) =>{
+        event.preventDefault();
+        app.deleteTask(taskId)
+        tasks = sectionToRender.getTasks();
+        updateScreen()
+    }
+    const updateTaskHandler = (event, pastTask) =>{
+        event.preventDefault();
+        const dialog = document.getElementsByClassName("edit")[0];
+        const sumbitButton = document.getElementsByClassName("edit")[1];
+        sumbitButton.addEventListener("click", ()=>{
+
+            const inputTaskName = document.getElementById("task-name").value;
+            const inputTaskDescription = document.getElementById("task-description").value;
+            const inputTaskDate = document.getElementById("task-date").value;
+            const inputTaskPriority = document.getElementById("task-priority").value;
+            const inputTaskCheked = document.getElementById("task-check").value;
+
+            console.log("the section to render is" + sectionToRender.id);
+            
+            app.updateTask(
+                pastTask.id,
+                {
+                    title: inputTaskName,
+                    description: inputTaskDescription,
+                    date: inputTaskDate,
+                    priority: inputTaskPriority,
+                    cheked: inputTaskCheked,
+                }
+            )
+
+            dialog.close();
+            updateScreen();
+        });
+        
+        dialog.showModal();
+        tasks = sectionToRender.getTasks();
     }
 
     const addProjectButton = document.getElementsByClassName("projects-add")[0];

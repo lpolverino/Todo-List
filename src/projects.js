@@ -1,17 +1,32 @@
 export default function createProject(name, id){
-    const tasks = []
+    let tasks = []
+
+    const findTask = (taskId) =>{
+        return tasks.find((task) => task.id === taskId)
+    }
 
     const addTask = (task) =>{
         tasks.push(task)
     }
 
-    const deleteTask = (task) =>{
-        const indexTask = tasks.indexOf(task);
-        task.splice(indexTask,1)
+    const deleteTask = (taskId) =>{
+        tasks = tasks.filter(task => task.id !== taskId)
     }
 
     const getTasks = () =>{
         return tasks
+    }
+
+    const hasTask = (taskId) => {
+        const task = findTask(taskId);
+        return task !== undefined
+    }
+
+    const updateTask = (taskId, newTask) => {
+        let task = findTask(taskId)
+        console.log(newTask);
+        Object.assign(task, newTask);
+        console.log(task);
     }
 
     return{
@@ -19,6 +34,8 @@ export default function createProject(name, id){
         id,
         addTask,
         getTasks,
-        deleteTask
+        deleteTask,
+        hasTask,
+        updateTask,
     }
 }

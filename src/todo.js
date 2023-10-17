@@ -1,6 +1,4 @@
 export default function createTodo(title, description, date, priority, cheked, id){
-
-
     const isFromToday = () =>{}
     const isFromThisWeek= () =>{}
     const isImportant= () => {}
@@ -16,7 +14,7 @@ export default function createTodo(title, description, date, priority, cheked, i
         isFromToday,
         isFromThisWeek,
         isImportant,
-        isCompleted
+        isCompleted,
 
     }
 } 
