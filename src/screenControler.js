@@ -1,7 +1,7 @@
 import createDisplayer from "./displayer"
+import { format, parseISO } from "date-fns";
 
 function createSections(){
-    // los handlers estan incompletos
     return [
         {name:"All", handler: (task) => true},
         {name:"today", handler:(task) => task.isFromToday()},
@@ -12,6 +12,11 @@ function createSections(){
 
 export default function createScreenControler(app){
 
+    const formatInputDate = (inputDate) =>{
+        let trim = inputDate.split("-");
+        trim = trim.map((el) => Number(el))
+        return new Date(trim[0], trim[1] - 1 , trim[2])
+    }
     const sections = createSections()
     const displayer = createDisplayer(sections, app.getProjects());
 
@@ -82,13 +87,18 @@ export default function createScreenControler(app){
             const inputTaskName = document.getElementById("task-name").value;
             const inputTaskDescription = document.getElementById("task-description").value;
             const inputTaskDate = document.getElementById("task-date").value;
+
+            const formatedDate = formatInputDate(inputTaskDate);
             const inputTaskPriority = document.getElementById("task-priority").value;
-            const inputTaskCheked = document.getElementById("task-check").value;
-            
+            const inputTaskCheked = document.getElementById("task-check").checked;
+
+            console.log(inputTaskCheked);
+
+
             app.createTask(
                 inputTaskName,
                 inputTaskDescription,
-                inputTaskDate,
+                formatedDate,
                 inputTaskPriority,
                 inputTaskCheked,
                 sectionToRender.id
@@ -135,7 +145,8 @@ export default function createScreenControler(app){
             const inputTaskDescription = document.getElementById("task-description").value;
             const inputTaskDate = document.getElementById("task-date").value;
             const inputTaskPriority = document.getElementById("task-priority").value;
-            const inputTaskCheked = document.getElementById("task-check").value;
+            const inputTaskCheked = document.getElementById("task-check").checked;
+            const formatedDate = formatInputDate(inputTaskDate);
 
             console.log("the section to render is" + sectionToRender.id);
             
@@ -144,7 +155,7 @@ export default function createScreenControler(app){
                 {
                     title: inputTaskName,
                     description: inputTaskDescription,
-                    date: inputTaskDate,
+                    date: formatedDate,
                     priority: inputTaskPriority,
                     cheked: inputTaskCheked,
                 }
