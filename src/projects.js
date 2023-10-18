@@ -24,9 +24,7 @@ export default function createProject(name, id){
 
     const updateTask = (taskId, newTask) => {
         let task = findTask(taskId)
-        console.log(newTask);
         Object.assign(task, newTask);
-        console.log(task);
     }
 
     return{

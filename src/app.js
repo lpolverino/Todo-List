@@ -19,11 +19,31 @@ export default function createApp(prjs){
 
     const saveStorage = (element,type) =>{
         if(!storageAvailable("localStorage")) return
-        console.log(localStorage.getItem(type));
         const storage = JSON.parse(localStorage.getItem(type));
         storage.list.push(element)
         localStorage.setItem(type, JSON.stringify(storage))
     }
+
+    const destroyStorage = (id, type) =>{
+        if(!storageAvailable("localStorage")) return
+        const storage = JSON.parse(localStorage.getItem(type));
+        const element = storage.list.find(el => el.id === id);
+        const index = storage.list.indexOf(element);
+        storage.list.splice(index, 1);
+        localStorage.setItem(type, JSON.stringify(storage))
+    }
+
+    const updateStorage = (taskId, projectId, newTask) =>{
+        console.log("updating storage");
+        if(!storageAvailable("localStorage")) return
+        const storage = JSON.parse(localStorage.getItem("tasks"));
+        let task = storage.list.find(tsk =>tsk.id === taskId);
+        Object.assign(task, newTask);
+        console.log(newTask);
+        console.log(task);
+        localStorage.setItem("tasks", JSON.stringify(storage))
+        console.log("updating storage");
+        } 
 
     const populateProjects = (app) =>{
         const projectsList = JSON.parse(localStorage.getItem("projects"))
@@ -77,14 +97,18 @@ export default function createApp(prjs){
     }
     
     const updateTask = (taskId, newTask) =>{
+        console.log(newTask);
         const project = findProjectTask(taskId);
         project.updateTask(taskId,newTask)
+        updateStorage(taskId, project.id, newTask)
+
     }
 
     const deleteTask = (taskId) => {
         const project = findProjectTask(taskId);
         const indexProject = projects.indexOf(project);
         projects[indexProject].deleteTask(taskId);
+        destroyStorage(taskId, "tasks");
     }
 
     const deleteProject = (projectId) =>{
@@ -94,6 +118,7 @@ export default function createApp(prjs){
         project.getTasks().forEach(task => {
             project.deleteTask(task.id)
         });
+        destroyStorage(projectId, "projects")
     }
 
     const firstProject = () =>{

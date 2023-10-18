@@ -149,6 +149,7 @@ export default function createScreenControler(app){
             const formatedDate = formatInputDate(inputTaskDate);
 
             console.log("the section to render is" + sectionToRender.id);
+            console.log(inputTaskName);
             
             app.updateTask(
                 pastTask.id,
