@@ -1,6 +1,6 @@
 import newProject from "./projects"
 import createTodo from "./todo"
-
+import {storageAvailable} from "./storage"
 
 export default function createApp(prjs){
     let projects = []
@@ -17,15 +17,62 @@ export default function createApp(prjs){
         return  Math.floor(Math.random() * max)
     }
 
+    const saveStorage = (element,type) =>{
+        if(!storageAvailable("localStorage")) return
+        console.log(localStorage.getItem(type));
+        const storage = JSON.parse(localStorage.getItem(type));
+        storage.list.push(element)
+        localStorage.setItem(type, JSON.stringify(storage))
+    }
+
+    const populateProjects = (app) =>{
+        const projectsList = JSON.parse(localStorage.getItem("projects"))
+        projectsList.list.forEach(savedProject =>{
+            const project = newProject(savedProject.name, savedProject.id)
+            projects.push(project)
+        })
+    }
+    
+      const populateTasks = () =>{
+        const taskList = JSON.parse(localStorage.getItem("tasks"))
+        taskList.list.forEach(savedTask =>{
+            const {title, description, date,priority,cheked,id, projectId} = savedTask
+            const task = createTodo(title,description,date,priority,cheked, id)
+            const projectToAddTask = projects.find(project => project.id === projectId)
+            projectToAddTask.addTask(task)
+        })
+    }
+
+    function populate(){
+        if(!storageAvailable("localStorage")) return
+        populateProjects();
+        populateTasks();
+      }
+
     const createTask = (title,description,date,priority,cheked, projectId) =>{
-        const task = createTodo(title,description,date,priority,cheked, getUniqueId())
+        const id = getUniqueId()
+        const task = createTodo(title,description,date,priority,cheked, id)
         const projectToAddTask = projects.find(project => project.id === projectId)
         projectToAddTask.addTask(task)
+        saveStorage({
+            title,
+            description,
+            date,
+            priority,
+            cheked,
+            id,
+            projectId
+        },"tasks")
     }
     
     const createProject = (name) =>{
-        const project = newProject(name,  getUniqueId())
+        const id = getUniqueId()
+        const project = newProject(name,  id)
         projects.push(project)
+        saveStorage({
+            name,
+            id
+        }, "projects")
         return project.id
     }
     
@@ -92,7 +139,7 @@ export default function createApp(prjs){
         firstProject,
         getProjectTask,
         getAllTask,
-        getProjectId
-
+        getProjectId,
+        populate
     }
 }
