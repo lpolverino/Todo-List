@@ -154,6 +154,7 @@ const createProjects = (projectEl) => {
 
 const createProjectSection = (sidebarEl, projects) => {
     const projectsConteiner = document.createElement("div");
+    projectsConteiner.classList.add("projects-conteiner")
     createProjectTitle(projectsConteiner);
     createProjects(projectsConteiner,projects);
 
