@@ -136,16 +136,18 @@ export default function createScreenControler(app){
         updateScreen()
     }
     const updateTaskHandler = (event, pastTask) =>{
+        //this is hard patched and shuol not be used
         event.preventDefault();
-        const dialog = document.getElementsByClassName("edit")[0];
-        const sumbitButton = document.getElementsByClassName("edit")[1];
+        const inputs = document.getElementsByClassName("edit-form")
+        const dialog = inputs[0];
+        const sumbitButton = inputs[6];
         sumbitButton.addEventListener("click", ()=>{
 
-            const inputTaskName = document.getElementById("task-name").value;
-            const inputTaskDescription = document.getElementById("task-description").value;
-            const inputTaskDate = document.getElementById("task-date").value;
-            const inputTaskPriority = document.getElementById("task-priority").value;
-            const inputTaskCheked = document.getElementById("task-check").checked;
+            const inputTaskName = inputs[1].value;
+            const inputTaskDescription = inputs[2].value;
+            const inputTaskDate = inputs[3].value;
+            const inputTaskPriority = inputs[4].value;
+            const inputTaskCheked = inputs[5].checked;
             const formatedDate = formatInputDate(inputTaskDate);
 
             console.log("the section to render is" + sectionToRender.id);

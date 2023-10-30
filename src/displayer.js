@@ -78,30 +78,35 @@ const createFormDialog = (fatherConteiner, clas) =>{
     inputTaskName.setAttribute("type","text");
     inputTaskName.setAttribute("id","task-name");
     inputTaskName.setAttribute("name","task-name");
+    inputTaskName.classList.add(clas)
 
     const inputTaskDescription = document.createElement("input");
     inputTaskDescription.setAttribute("type","text");
     inputTaskDescription.setAttribute("id","task-description");
     inputTaskDescription.setAttribute("name","task-description");
+    inputTaskDescription.classList.add(clas)
 
     const inputTaskDate = document.createElement("input");
     inputTaskDate.setAttribute("type","date");
     inputTaskDate.setAttribute("id","task-date");
     inputTaskDate.setAttribute("name","task-date");
+    inputTaskDate.classList.add(clas)
 
     const inputTaskPriority = document.createElement("input");
     inputTaskPriority.setAttribute("type","number");
     inputTaskPriority.setAttribute("id","task-priority");
     inputTaskPriority.setAttribute("name","task-priority");
+    inputTaskPriority.classList.add(clas)
 
     const inputTaskCheked = document.createElement("input");
     inputTaskCheked.setAttribute("type","checkbox");
     inputTaskCheked.setAttribute("id","task-check");
     inputTaskCheked.setAttribute("name","task-check");
+    inputTaskCheked.classList.add(clas)
 
     const sumbitButton = document.createElement("button");
     sumbitButton.classList.add("sumbit-task");
-    sumbitButton.classList.add(clas)
+    sumbitButton.classList.add(clas);
 
     form.appendChild(inputTaskName);
     form.appendChild(inputTaskDescription);
@@ -172,8 +177,7 @@ const createTask = (taskEl, task, editHandler, deleteHandler) =>{
     editButton.classList.add("edit-button");
     editButton.innerText = "Edit";
     editButton.addEventListener("click", (event) => {
-        createFormDialog(taskEl,"edit")
-        console.log("here");
+        createFormDialog(taskEl,"edit-form")
         editHandler(event, task)
     })
 
