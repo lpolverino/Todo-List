@@ -4,8 +4,8 @@ import { format, parseISO } from "date-fns";
 function createSections(){
     return [
         {name:"All", handler: (task) => true},
-        {name:"today", handler:(task) => task.isFromToday()},
-        {name:"this Week", handler:(task) => task.isFromThisWeek()},
+        {name:"Today", handler:(task) => task.isFromToday()},
+        {name:"This Week", handler:(task) => task.isFromThisWeek()},
         {name:"Important", handler:(task) => task.isImportant()},
         {name:"Completed", handler:(task) => task.isCompleted()}]
 }

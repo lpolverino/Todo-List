@@ -43,7 +43,7 @@ const createProjectTitle = (projectEl) => {
 
     const addButton = document.createElement("button");
     addButton.classList.add("projects-add");
-    addButton.innerText ="Add Project"
+    
 
     const dialog = document.createElement("dialog");
     dialog.classList.add("project-dialog");
@@ -133,8 +133,9 @@ const createProject = (project, clickHandler, deleteHandler) =>{
     })
     
     const deleteButton = document.createElement("button");
-    deleteButton.classList.add("delete-project-button");
-    deleteButton.innerText = "Delete";
+    deleteButton.classList.add("project-button");
+    deleteButton.classList.add("delete");
+    deleteButton.innerText = "";
     deleteButton.addEventListener("click", (e) =>{
         e.preventDefault();
         deleteHandler(e, project.id);
@@ -176,15 +177,15 @@ const createTask = (taskEl, task, editHandler, deleteHandler) =>{
 
     const editButton = document.createElement("button");
     editButton.classList.add("edit-button");
-    editButton.innerText = "Edit";
+    editButton.innerText = "";
     editButton.addEventListener("click", (event) => {
         createFormDialog(taskEl,"edit-form")
         editHandler(event, task)
     })
 
     const deleteButton = document.createElement("button");
-    deleteButton.classList.add("delete-task-button");
-    deleteButton.innerText = "Delete";
+    deleteButton.classList.add("task-button");
+    deleteButton.classList.add("delete");
     deleteButton.addEventListener("click", (event) => deleteHandler(event,id))
 
     taskEl.appendChild(titleEl);
@@ -206,18 +207,17 @@ const renderContent = (tasks, editHandler, deleteHandler) =>{
 
 const createConten = (allTasks, contentEl, editHandler, deleteHandler) =>{
     const addButton = document.createElement("button");
-    addButton.innerText = "AddTask"
     addButton.classList.add("task-add");
 
     const buttonConteiner = document.createElement("div");
     buttonConteiner.classList.add("task");
+    buttonConteiner.classList.add("new-task")
 
     buttonConteiner.appendChild(addButton)
 
     createFormDialog(buttonConteiner);
 
     contentEl.appendChild(buttonConteiner);
-    console.log(allTasks);
 
     allTasks.forEach(task =>{
         const taskel = document.createElement("div");

@@ -1,27 +1,52 @@
 *{
+
+    font-family: 'Playpen Sans', cursive;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    --important-red: #c94c4c;
+    --grey-red: #eea29a;
+    --grey-green : #b1cbbb;
+    --grey-background:#deeaee;
 }
 
 body{
     display: grid;
     grid-template-columns: 1fr 5fr;
-    grid-template-rows: 100px 1fr;
+    grid-template-rows: 68px 1fr;
     align-items: center;
     height: 100vh;
 }
 
 #header{
+    width: 100%;
+    height: 100%;
     grid-column: 1/3;
     grid-row: 1/2;
-    margin-left: 1rem;
+    background-color: var(--important-red);
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    padding-left: 20px;
+}
+
+ #header h1 {
+    font-size: 2.5rem;
+    font-weight: 900;
 }
 
 #sidebar{
+    width: 100%;
+    height: 100%;
     grid-column: 1/2;
     grid-row: 2/3;
-    justify-self: center;
+    background-color: var(--grey-red);
+}
+
+#sidebar > div {
+    margin: 32px auto;
+    text-align: center;
+    font-size: 32px;
 }
 
 #content{
@@ -30,14 +55,111 @@ body{
     align-self: normal;
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: repeat(auto-fit, 50px);
+    grid-template-rows: 50px repeat(auto-fit, 64px);
+    background-color: var(--grey-background);
+    gap: 18px;
+    padding-left: 1em;
+    padding-right: 1em;
+    padding-top: 1em;
 }
 
 ul{
     list-style-type: none;
 }
 
+a{
+    text-decoration: none;
+    color: black;
+}
+
 form button{
     width: 200px;
     height: 200px;
+}
+
+.projects-add{
+    border-radius: 50%;
+    background-color: var(--grey-green);
+    border: none;
+    height: 42px;
+    width: 42px;
+    background-image: url("../src/img/plus.svg");
+}
+
+button:hover{
+    opacity: 0.85;
+    cursor: pointer;
+}
+
+.project{
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+.project a {
+    height: 80%;
+}
+
+.project .delete{
+    margin: auto 0;
+    width: 24px;
+    height: 24px;
+    border: none;
+    background-color: var(--grey-green);
+    border-radius: 50%;
+}
+
+.task{
+    background-color: var(--grey-red);
+    border-radius: 15px;
+    box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
+    display: grid;
+    grid-template-rows: 2fr 1fr;
+    grid-template-columns: 1fr 50px
+}
+
+.task-title{
+    margin: 8px 32px;
+}
+
+.edit-button{
+    margin: 0 20px;
+    background-image: url("../src/img/pen-plus.svg");
+}
+
+.task button{
+    grid-row: 2/3;
+    background-color: var(--grey-green);
+    border: none;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+}
+
+.delete{
+    background-image: url("../src/img/trash-can-outline.svg");
+}
+
+.new-task{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.new-task button {
+    width: 100%;
+    height: 100%;
+    border-radius: 15px;
+    text-align: center;
+}
+
+.task-add{
+    background-image: url("../src/img/plus.svg");
+    background-repeat: no-repeat;
+    background-position: center; 
+
 }
