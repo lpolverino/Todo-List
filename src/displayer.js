@@ -65,6 +65,7 @@ const createProjectTitle = (projectEl) => {
 
     const sumbitButton = document.createElement("button");
     sumbitButton.classList.add("sumbit-project");
+    sumbitButton.innerText = "sumbit"
 
     form.appendChild(formRow);
     dialog.appendChild(form);
@@ -76,6 +77,7 @@ const createProjectTitle = (projectEl) => {
 }
 
 const createFormDialog = (fatherConteiner, clas) =>{
+    console.log(clas);
     const dialog = document.createElement("dialog");
     dialog.classList.add("task-dialog");
     dialog.classList.add(clas)
@@ -149,6 +151,7 @@ const createFormDialog = (fatherConteiner, clas) =>{
 
     const sumbitButton = document.createElement("button");
     sumbitButton.classList.add("sumbit-task");
+    sumbitButton.innerText ="Sumbit"
     sumbitButton.classList.add(clas);
 
     form.appendChild(taskRow);
@@ -156,8 +159,8 @@ const createFormDialog = (fatherConteiner, clas) =>{
     form.appendChild(dateRow);
     form.appendChild(priorityRow);
     form.appendChild(checkRow);
-    dialog.appendChild(form);
     form.appendChild(sumbitButton);
+    dialog.appendChild(form);
     fatherConteiner.appendChild(dialog);
 }
 
@@ -214,9 +217,24 @@ const createTask = (taskEl, task, editHandler, deleteHandler) =>{
     const {title, description, date, priority, cheked, id} = task;
 
 
+
+    const dataConteiner = document.createElement("div");
+    dataConteiner.classList.add("task-data")
+
     const titleEl = document.createElement("h3");
     titleEl.classList.add("task-title");
     titleEl.innerText = title;
+    dataConteiner.appendChild(titleEl);
+
+    const descriptiionEL = document.createElement("p");
+    descriptiionEL.classList.add("task-description");
+    descriptiionEL.innerText = description;
+    dataConteiner.appendChild(descriptiionEL);
+
+    const dateEL = document.createElement("p");
+    dateEL.classList.add("task-date");
+    dateEL.innerText = date;
+    dataConteiner.appendChild(dateEL);
 
     const editButton = document.createElement("button");
     editButton.classList.add("edit-button");
@@ -231,9 +249,17 @@ const createTask = (taskEl, task, editHandler, deleteHandler) =>{
     deleteButton.classList.add("delete");
     deleteButton.addEventListener("click", (event) => deleteHandler(event,id))
 
-    taskEl.appendChild(titleEl);
+    taskEl.appendChild(dataConteiner);
     taskEl.appendChild(editButton);
     taskEl.appendChild(deleteButton);
+
+    if(cheked){
+        dataConteiner.classList.add("checked");
+    }
+    if(priority === "1"){
+        dataConteiner.classList.add("important")
+    }
+
 }
 
 const emptyContent = (contentEl) => {
@@ -258,7 +284,7 @@ const createConten = (allTasks, contentEl, editHandler, deleteHandler) =>{
 
     buttonConteiner.appendChild(addButton)
 
-    createFormDialog(buttonConteiner);
+    createFormDialog(buttonConteiner, "new-task-dialog");
 
     contentEl.appendChild(buttonConteiner);
 
