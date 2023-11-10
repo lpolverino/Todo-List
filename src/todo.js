@@ -9,7 +9,6 @@ export default function createTodo(title, description, date, priority, cheked, i
         return  compareAsc(today, date) === 0
     }
     const isFromThisWeek= () =>{
-        console.log(date);
         return isThisWeek(date)
     }
     const isImportant= () => {

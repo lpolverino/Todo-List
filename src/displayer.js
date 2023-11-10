@@ -49,16 +49,24 @@ const createProjectTitle = (projectEl) => {
     dialog.classList.add("project-dialog");
     projectTitleConteiner.appendChild(dialog);
 
+    const formRow = document.createElement("div");
+    formRow.classList.add("form-row");
     const form = document.createElement("form");
+    const label = document.createElement("label");
+    label.setAttribute("for","project")
+    label.innerText = "Title"
     const input = document.createElement("input");
     input.setAttribute("type","text");
     input.setAttribute("id","project");
     input.setAttribute("name","Project");
 
+    formRow.appendChild(label);
+    formRow.appendChild(input);
+
     const sumbitButton = document.createElement("button");
     sumbitButton.classList.add("sumbit-project");
 
-    form.appendChild(input);
+    form.appendChild(formRow);
     dialog.appendChild(form);
     form.appendChild(sumbitButton);
 
@@ -74,45 +82,80 @@ const createFormDialog = (fatherConteiner, clas) =>{
 
     const form = document.createElement("form");
     
+    const taskRow = document.createElement("div");
+    taskRow.classList.add("form-row");
+    const labelName = document.createElement("label");
+    labelName.setAttribute("for","task-name")
+    labelName.innerText = "Name"
     const inputTaskName = document.createElement("input");
     inputTaskName.setAttribute("type","text");
     inputTaskName.setAttribute("id","task-name");
     inputTaskName.setAttribute("name","task-name");
-    inputTaskName.classList.add(clas)
+    inputTaskName.classList.add(clas);
+    taskRow.appendChild(labelName);
+    taskRow.appendChild(inputTaskName);
 
+    const descriptionRow = document.createElement("div");
+    descriptionRow.classList.add("form-row");
+    const labelDescription = document.createElement("label");
+    labelDescription.setAttribute("for","task-description")
+    labelDescription.innerText = "Description"
     const inputTaskDescription = document.createElement("input");
     inputTaskDescription.setAttribute("type","text");
     inputTaskDescription.setAttribute("id","task-description");
     inputTaskDescription.setAttribute("name","task-description");
     inputTaskDescription.classList.add(clas)
+    descriptionRow.appendChild(labelDescription);
+    descriptionRow.appendChild(inputTaskDescription);
 
+    const dateRow = document.createElement("div");
+    dateRow.classList.add("form-row");
+    const labelDate = document.createElement("label");
+    labelDate.setAttribute("for","task-date")
+    labelDate.innerText = "Date"
     const inputTaskDate = document.createElement("input");
     inputTaskDate.setAttribute("type","date");
     inputTaskDate.setAttribute("id","task-date");
     inputTaskDate.setAttribute("name","task-date");
     inputTaskDate.classList.add(clas)
+    dateRow.appendChild(labelDate);
+    dateRow.appendChild(inputTaskDate);
 
+    const priorityRow = document.createElement("div");
+    priorityRow.classList.add("form-row");
+    const labelPriority = document.createElement("label");
+    labelPriority.setAttribute("for","task-priority");
+    labelPriority.innerText = "Priority"
     const inputTaskPriority = document.createElement("input");
     inputTaskPriority.setAttribute("type","number");
     inputTaskPriority.setAttribute("id","task-priority");
     inputTaskPriority.setAttribute("name","task-priority");
     inputTaskPriority.classList.add(clas)
+    priorityRow.appendChild(labelPriority);
+    priorityRow.appendChild(inputTaskPriority);
 
+    const checkRow = document.createElement("div");
+    checkRow.classList.add("form-row");
+    const labelChecked = document.createElement("label");
+    labelChecked.setAttribute("for","task-check")
+    labelChecked.innerText = "Checked"
     const inputTaskCheked = document.createElement("input");
     inputTaskCheked.setAttribute("type","checkbox");
     inputTaskCheked.setAttribute("id","task-check");
     inputTaskCheked.setAttribute("name","task-check");
-    inputTaskCheked.classList.add(clas)
+    inputTaskCheked.classList.add(clas);
+    checkRow.appendChild(labelChecked);
+    checkRow.appendChild(inputTaskCheked);
 
     const sumbitButton = document.createElement("button");
     sumbitButton.classList.add("sumbit-task");
     sumbitButton.classList.add(clas);
 
-    form.appendChild(inputTaskName);
-    form.appendChild(inputTaskDescription);
-    form.appendChild(inputTaskDate);
-    form.appendChild(inputTaskPriority);
-    form.appendChild(inputTaskCheked);
+    form.appendChild(taskRow);
+    form.appendChild(descriptionRow);
+    form.appendChild(dateRow);
+    form.appendChild(priorityRow);
+    form.appendChild(checkRow);
     dialog.appendChild(form);
     form.appendChild(sumbitButton);
     fatherConteiner.appendChild(dialog);
